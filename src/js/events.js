@@ -1,50 +1,40 @@
 $(function() {
-
-debug = false;
-
-    drawing = false;
     $("#canvas").mousedown(function(e) {
         $("#canvas").clearCanvas();
         //$('canvas').removeLayers();
         // $('canvas').drawLayers();
-
         obj = {
             ptCnt: 0,
             layer: false,
             strokeStyle: '#000',
             strokeWidth: 6,
-            rounded: true,
-            click: function(layer) {
-                // Click a star to spin it
-                //console.log (layer);
-                // $(this).animateLayer(layer, {
-                //   rotate: '+=144'
-                // });
-            }
+            rounded: true
         };
-        drawing = true;
+        isDrawing = true;
+
         pt = {
             id: 1,
-            x: e.clientX,
-            y: e.clientY
+             x: e.clientX,
+             y: e.clientY
+            //x: $("#canvas").attr('width') / 2,
+            //y: $("#canvas").attr('height') / 2
         }
         setPoint(pt);
     });
     $("#canvas").mousemove(function(e) {
-        if (drawing) {
+        if (isDrawing) {
             pt = {
                 id: 2,
                 x: e.clientX,
                 y: e.clientY
             }
             setPoint(pt);
-            //console.log('move', e.clientX, e.clientY);
-                    draw();
-
+            console.log('move', e.clientX, e.clientY);
+            draw();
         }
     });
     $("#canvas").mouseup(function(e) {
-        drawing = false;
+        isDrawing = false;
         console.log('end', e.clientX, e.clientY);
         draw();
     });
@@ -59,14 +49,14 @@ function setPoint(pt) {
     if (pt != undefined) {
         obj.ptCnt++;
         var line = Object();
-        if (!debug || pt.id == 1) {
+        if (!isDebug || pt.id == 1) {
             line.type = 'line';
         } else {
             line.type = 'quadratic';
         }
         line['x' + pt.id] = pt.x;
         line['y' + pt.id] = pt.y;
-        if (debug && pt.id == 2) {
+        if (isDebug && pt.id == 2) {
             console.log(obj.ptCnt);
             lastPt = obj['p' + (obj.ptCnt - 1)];
             line.cx1 = line.x2 - (line.x2 - lastPt['x' + pt.id]) / 2;;

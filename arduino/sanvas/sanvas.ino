@@ -18,45 +18,28 @@ const int DEBUG_RX = 10;
     which has to be the same used in the PC serial monitor application*/
 Bridge bridge = Bridge(DEBUG_RX, DEBUG_TX, 115200); 
 
-const int led = 7;
+const int led = 9;
 const int button = 2;
 
 void setup() {
-	pinMode(led, OUTPUT);
-	pinMode(button, INPUT);
-	  
-	bridge.begin();
+  pinMode(button,INPUT_PULLUP);
+  bridge.begin();
 }
 
 /* Main Loop */
 void loop() {
 	 
-	static uint8_t dataOut[2] = {1, 2};
-	static bridge_payload_t rxPayload;
-        uint8_t dataOut[] = {1, 2, 3};
-        bridge.sendData(dataOut, sizeof(dataOut));
-	if (bridge.newData == true){
-		
-		rxPayload = bridge.getData();
-	
-		digitalWrite(led, HIGH);
+  static uint8_t dataOut[2] = {1, 2};
+  static bridge_payload_t rxPayload;
+  
+  if (digitalRead(button) == LOW) {
+        
+      bridge.sendData(dataOut, 2);
 
-        	delay(1000);
-
-    	digitalWrite(led, LOW);
-	}
-
-	
-	/* On a button press Send a fixed test packet */
-	if (digitalRead(button))
-	{
-		bridge.sendData(dataOut, 2);
-
-		digitalWrite(led, HIGH);
-		delay(1000);
-		digitalWrite(led, LOW);
-	}
-
+	digitalWrite(led, HIGH);
+	delay(1000);
+	digitalWrite(led, LOW);
+  }
 }
 
 /* the serialEvent() handler is called on every received data 

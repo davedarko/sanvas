@@ -1,39 +1,46 @@
 $(function() {
+
+debug = false;
+
     drawing = false;
-    obj = {
-        layer: true,
-        strokeStyle: '#000',
-        strokeWidth: 6,
-        rounded: true,
-        click: function(layer) {
-            // Click a star to spin it
-            //console.log (layer);
-            // $(this).animateLayer(layer, {
-            //   rotate: '+=144'
-            // });
-        }
-};
-
-setPoint();
-    draw();
-
-    
     $("#canvas").mousedown(function(e) {
+        $("#canvas").clearCanvas();
+        //$('canvas').removeLayers();
+        // $('canvas').drawLayers();
+
+        obj = {
+            ptCnt: 0,
+            layer: false,
+            strokeStyle: '#000',
+            strokeWidth: 6,
+            rounded: true,
+            click: function(layer) {
+                // Click a star to spin it
+                //console.log (layer);
+                // $(this).animateLayer(layer, {
+                //   rotate: '+=144'
+                // });
+            }
+        };
         drawing = true;
         pt = {
-            x1: e.clientX,
-            y1: e.clientY
+            id: 1,
+            x: e.clientX,
+            y: e.clientY
         }
         setPoint(pt);
     });
     $("#canvas").mousemove(function(e) {
         if (drawing) {
             pt = {
-                x2: e.clientX,
-                y2: e.clientY
+                id: 2,
+                x: e.clientX,
+                y: e.clientY
             }
             setPoint(pt);
-            console.log('move', e.clientX, e.clientY);
+            //console.log('move', e.clientX, e.clientY);
+                    draw();
+
         }
     });
     $("#canvas").mouseup(function(e) {
@@ -47,28 +54,57 @@ setPoint();
     // }
 });
 
-function setPoint() {
-    var line1 = Object();
-    line1.type = 'line';
-    line1.x1 = 100;
-    line1.y1 = 100;
-    obj.p1 = line1;
-    var line2 = Object();
-    line2.type = 'quadratic';
-    // line2.cx1 = 200;
-    // line2.cy1 = 250;
-    // line2.x2 = 300;
-    // line2.y2 = 100;
-    line2.cx1 = line2.x2 = 300;
-    line2.cy1 = line2.y2 = 100;
-    obj.p2 = line2;
-    var line3 = Object();
-    line3.type = 'quadratic';
-    line3.cx1 = line3.x2 = 500;
-    line3.cy2 = line3.y2 = 100;
-    // line3.cx1 = 400;
-    // line3.cy1 = -50;
-    obj.p3 = line3;
+function setPoint(pt) {
+    z = 150;
+    if (pt != undefined) {
+        obj.ptCnt++;
+        var line = Object();
+        if (!debug || pt.id == 1) {
+            line.type = 'line';
+        } else {
+            line.type = 'quadratic';
+        }
+        line['x' + pt.id] = pt.x;
+        line['y' + pt.id] = pt.y;
+        if (debug && pt.id == 2) {
+            console.log(obj.ptCnt);
+            lastPt = obj['p' + (obj.ptCnt - 1)];
+            line.cx1 = line.x2 - (line.x2 - lastPt['x' + pt.id]) / 2;;
+            line.cy1 = line.y2 + z;
+        }
+        obj['p' + obj.ptCnt] = line;
+    } else {
+        obj.ptCnt++;
+        var line1 = Object();
+        line1.type = 'line';
+        line1.x1 = 100;
+        line1.y1 = 100;
+        obj.p1 = line1;
+        obj.ptCnt++;
+        var line2 = Object();
+        line2.type = 'quadratic';
+        line2.x2 = 300;
+        line2.y2 = 100;
+        // line2.cx1 = 200;
+        // line2.cy1 = 250;
+        console.log(obj.ptCnt);
+        lastPt = obj['p' + (obj.ptCnt - 1)];
+        line2.cx1 = line2.x2 - (line2.x2 - lastPt.x1) / 2;;
+        line2.cy1 = line2.y2 + z;
+        obj.p2 = line2;
+        obj.ptCnt++;
+        var line3 = Object();
+        line3.type = 'quadratic';
+        line3.x2 = 500;
+        line3.y2 = 100;
+        // line3.cx1 = 400;
+        // line3.cy1 = -50;
+        lastPt = obj['p' + (obj.ptCnt - 1)];
+        line3.cx1 = line3.x2 - (line3.x2 - lastPt.x2) / 2;
+        line3.cy1 = line3.y2 - z;
+        console.log(line3.cx1, line3.cy1);
+        obj.p3 = line3;
+    }
 }
 
 function draw() {
@@ -79,7 +115,7 @@ function draw() {
     // }
     // Draw the line
     //console.log (obj);
-    $('canvas').drawPath(obj);
+    $('#canvas').drawPath(obj);
     // $('#canvas').drawPath({
     //   strokeStyle: '#000',
     //   strokeWidth: 4,

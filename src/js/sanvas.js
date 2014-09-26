@@ -1,6 +1,3 @@
-var frame_buffer() {
-
-}
 
 $(function() {
 	

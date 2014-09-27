@@ -5,7 +5,6 @@ $(function() {
     isAg = contains(sensors, 'ag');
     isLp = contains(sensors, 'lp');
     isG = contains(sensors, 'g');
-    console.log(isSensors);
     isDebug = false;
     /* constants */
     isDrawing = false;
@@ -17,7 +16,6 @@ $(function() {
     lp = null;
     g = null;
     obj = null;
-
 });
 /* additional functions */
 function contains(a, obj) {
@@ -30,19 +28,14 @@ function contains(a, obj) {
     return false;
 }
 
-
-function loader ()
-{
+function loader() {
     isReady = true;
     isReady &= sensors.length > 0;
     isReady &= !isAg || ag != null;
     isReady &= !isLp || lp != null;
     isReady &= !isG || g != null;
-
-    if (isReady)
-    {
-    $("#canvas").css('background-color', 'white');
-    statusBar ();
+    if (isReady) {
+        $("#canvas").css('background-color', 'white');
+        statusBar();
     }
-
 }

@@ -22,6 +22,7 @@ $(function() {
         token: token,
         deviceId: 'b9162c8d-995b-4797-9478-2fa785819980', //"5963c2de-7c36-4f14-ab4f-b32b70f835ff",
         incomingData: function(lp) {
+            
             //console.log("data from Light/Prox", lp)
         }
     }).getDeviceData({

@@ -3,7 +3,7 @@ function sensor_start() {
         id: 1,
         //x: $("#canvas").attr('width') / 2,
         //y: $("#canvas").attr('height') / 2,
-        x: 10,
+        x: 50,
         y: $("#canvas").attr('height') - 100,
         z: velocity.z
     };

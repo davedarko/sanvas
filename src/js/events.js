@@ -1,5 +1,7 @@
 $(function() {
-    var tid = setInterval(run, speed);
+    
+    var tid = setInterval(run, timeFrame);
+    var velocity = {x:0,y:0};
     $("#canvas").mousedown(function(e) {
         obj = {
             ptCnt: 0,
@@ -51,8 +53,11 @@ function run() {
             }
             //console.log('ACCEL', 'x', ag.accel.x, 'y', ag.accel.y, 'z', ag.accel.z);
             //console.log('GYRO', 'x', ag.gyro.x, 'y', ag.gyro.y, 'z', ag.gyro.z);
-            isX = Math.abs(ag.accel.x) > 0.3;
-            isY = Math.abs(ag.accel.y) > 0.3;
+            velocity.x += ag.accel.x;
+            velocity.y += ag.accel.y;
+
+            isX = 1; //Math.abs(ag.accel.x) > 0.3;
+            isY = 1; //Math.abs(ag.accel.y) > 0.3;
             isMove = isX || isY;
             console.log('isMove', isMove);
             if (isMove) {

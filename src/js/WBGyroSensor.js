@@ -20,8 +20,8 @@ function sensor_move() {
         return;
     } else if (obj.ptCnt == 1) {
         lastPt = obj['p' + (obj.ptCnt)];
-        sX = lastPt.x1 + steps;
-        sY = lastPt.y1 + steps;
+        sX = lastPt.x1 + velocity.x;
+        sY = lastPt.y1 + velocity.y;
         pt = {
             id: 2,
             x: sX,
@@ -33,8 +33,8 @@ function sensor_move() {
             console.log(obj.ptCnt, obj, lastPt);
             isConsoleMoves = false;
         }
-        sX = lastPt.x2 + steps;
-        sY = lastPt.y2 + steps;
+        sX = lastPt.x2 + velocity.x;
+        sY = lastPt.y2 + velocity.y;
         pt = {
             id: 2,
             x: sX,

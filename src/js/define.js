@@ -11,7 +11,7 @@ $(function() {
     isDrawing = false;
     isConsoleMoves = false;
     isPushedButton = false;
-    speed = 750;
+    timeFrame = 750;
     steps = 5;
     ag = null;
     lp = null;

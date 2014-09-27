@@ -18,7 +18,7 @@ $(function() {
         }
     });
     $("#canvas").mousemove(function(e) {
-        if (isPushedButton && isDrawing) {
+         if (isPushedButton && isDrawing) {
             if (isAg && ag != null) {
                 sensor_move();
             } else {

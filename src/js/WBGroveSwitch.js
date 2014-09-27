@@ -1,7 +1,7 @@
 function handleButton() {
     if (isG && g != null) {
         isPushedButton = (g.up_ch_payload[0]) ? true : false;
-        if (isPushedButton)
+        if (!isPushedButton)
         {
             isDrawing = false;
         }

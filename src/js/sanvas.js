@@ -8,6 +8,7 @@ $(function() {
         $("#canvas").css('background-color', colourfill);
         $("#canvas").css('border-color', colourfill);
     } else {
+        $("#loader").css("display", "none");
         $("#canvas").css('border-color', 'blue');
     }
     $("#canvas").attr('width', $(window).innerWidth() - 2);

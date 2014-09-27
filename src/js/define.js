@@ -1,6 +1,6 @@
 $(function() {
     /* switches */
-    sensors = [ 'ag', 'lp', 'g'] /*['ag', 'lp', 'g']*/
+    sensors = ['lp','g'] /*['ag', 'lp', 'g']*/
     isSensors = contains(sensors, 'ag') && contains(sensors, 'lp') && contains(sensors, 'g');
     isAg = contains(sensors, 'ag');
     isLp = contains(sensors, 'lp');
@@ -10,15 +10,17 @@ $(function() {
     isDrawing = false;
     isConsoleMoves = false;
     isPushedButton = false;
-    timeFrame = 750;
+    timeFrame = 250;
     steps = 5;
     ag = null;
     lp = null;
     g = null;
     obj = null;
-    velocity = {x:0,y:0};
-	warp = 5;
-
+    velocity = {
+        x: 0,
+        y: 0
+    };
+    warp = 5;
 });
 /* additional functions */
 function contains(a, obj) {
@@ -39,7 +41,7 @@ function loader() {
     isReady &= !isG || g != null;
     if (isReady) {
         $("#loader").css("display", "none");
-        $("#canvas").css('background-color', 'white');        
+        $("#canvas").css('background-color', 'white');
         statusBar();
     }
 }

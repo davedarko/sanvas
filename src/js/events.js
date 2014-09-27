@@ -1,10 +1,6 @@
-
 $(function() {
     var tid = setInterval(run, speed);
     $("#canvas").mousedown(function(e) {
-        $("#canvas").clearCanvas();
-        //$('canvas').removeLayers();
-        // $('canvas').drawLayers();
         obj = {
             ptCnt: 0,
             layer: false,
@@ -13,7 +9,7 @@ $(function() {
             rounded: true
         };
         isDrawing = true;
-        if (isSensor) {
+        if (isSensors) {
             pt = {
                 id: 1,
                 x: $("#canvas").attr('width') / 2,
@@ -31,7 +27,7 @@ $(function() {
     });
     $("#canvas").mousemove(function(e) {
         if (isDrawing) {
-            if (isSensor) {
+            if (isSensors) {
                 if (obj.ptCnt == 0) {
                     return;
                 } else if (obj.ptCnt == 1) {
@@ -69,13 +65,12 @@ $(function() {
                 }
             }
             setPoint(pt);
-
             draw();
         }
     });
     $("#canvas").mouseup(function(e) {
         isDrawing = false;
-        if (isSensor) {} else {
+        if (isSensors) {} else {
             console.log('end', e.clientX, e.clientY);
         }
         draw();
@@ -84,7 +79,7 @@ $(function() {
 
 function setPoint(pt) {
     z = 50;
-    obj.strokeStyle = extractLightSensor (lp);
+    obj.strokeStyle = extractLightSensor(lp);
     if (pt != undefined) {
         obj.ptCnt++;
         var line = Object();
@@ -100,7 +95,6 @@ function setPoint(pt) {
             line.cx1 = line.x2 - (line.x2 - lastPt['x' + pt.id]) / 2;;
             line.cy1 = line.y2 + z;
         }
-        //line.strokeStyle = extractLightSensor(lp);
         obj['p' + obj.ptCnt] = line;
     } else {
         obj.ptCnt++;
@@ -138,9 +132,10 @@ function setPoint(pt) {
 
 function run() {
     isConsoleMoves = true;
-    if (isSensor) {
+    if (isSensors) {
         isReady = ag != null && lp != null && g != null;
         if (isReady) {
+            handleButton();
             $("#canvas").css('background-color', 'white');
             if (isPushedButton) {
                 if (!isDrawing) {
@@ -155,7 +150,16 @@ function run() {
                 if (isMove) {
                     $("#canvas").mousemove();
                 }
+            } else {
+                $("#canvas").clearCanvas();
+                //$('canvas').removeLayers();
+                // $('canvas').drawLayers();        
             }
+        }
+    } else {
+        handleButton();
+        if (!isPushedButton) {
+            $("#canvas").clearCanvas();
         }
     }
 }
@@ -170,25 +174,3 @@ function draw() {
     }
     $('#canvas').drawPath(obj);
 }
-
-/* button */
-$(document).on('keydown', function(e) {
-    switch (e.which) {
-        case 32:
-            isPushedButton = true;
-            break;
-            // key code for left arrow
-        case 37:
-            break;
-            // key code for right arrow
-        case 39:
-            break;
-    }
-});
-$(document).on('keyup', function(e) {
-    switch (e.which) {
-        case 32:
-            isPushedButton = false;
-            break;
-    }
-});

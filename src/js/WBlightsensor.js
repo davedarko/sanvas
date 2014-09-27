@@ -10,6 +10,9 @@ function rgbToHex(r, g, b) {
 }
 
 function extractLightSensor(data) {
+	if (!(isSensors || (isLp && lp != null))) {
+		return '#000';
+	}
 	var red = data.clr.r;
 	var green = data.clr.g;
 	var blue = data.clr.b;

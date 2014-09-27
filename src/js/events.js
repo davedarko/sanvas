@@ -18,7 +18,7 @@ $(function() {
         }
     });
     $("#canvas").mousemove(function(e) {
-         if (isPushedButton && isDrawing) {
+        if (isPushedButton && isDrawing) {
             if (isAg && ag != null) {
                 sensor_move();
             } else {
@@ -46,20 +46,20 @@ function run() {
     handleButton();
     isConsoleMoves = true;
     if (isAg && ag != null) {
-        console.log(isPushedButton, isDrawing);
         if (isPushedButton) {
             if (!isDrawing) {
                 $("#canvas").mousedown();
             }
             //console.log('ACCEL', 'x', ag.accel.x, 'y', ag.accel.y, 'z', ag.accel.z);
             //console.log('GYRO', 'x', ag.gyro.x, 'y', ag.gyro.y, 'z', ag.gyro.z);
-            velocity.x += ag.accel.x * warp;
-            velocity.y += ag.accel.y * warp;
-            isX = 1; //Math.abs(ag.accel.x) > 0.3;
-            isY = 1; //Math.abs(ag.accel.y) > 0.3;
+            isX = Math.abs(ag.accel.x) > 0.05;
+            isY = Math.abs(ag.accel.y) > 0.05;
             isMove = isX || isY;
-            console.log('isMove', isMove);
             if (isMove) {
+                velocity.x += ag.accel.x + warp;
+                velocity.y += ag.accel.y + warp;
+                velocity.z += ag.accel.z + warp;
+
                 $("#canvas").mousemove();
             }
         } else {

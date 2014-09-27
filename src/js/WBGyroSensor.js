@@ -1,8 +1,11 @@
 function sensor_start() {
     pt = {
         id: 1,
-        x: $("#canvas").attr('width') / 2,
-        y: $("#canvas").attr('height') / 2
+        //x: $("#canvas").attr('width') / 2,
+        //y: $("#canvas").attr('height') / 2,
+        x: 10,
+        y: $("#canvas").attr('height') -100,
+        z: velocity.z
     };
 }
 
@@ -25,20 +28,22 @@ function sensor_move() {
         pt = {
             id: 2,
             x: sX,
-            y: sY
+            y: sY,
+            z: velocity.z
         };
     } else if (obj.ptCnt > 1) {
         lastPt = obj['p' + (obj.ptCnt)];
-        if (isConsoleMoves) {
-            console.log(obj.ptCnt, obj, lastPt);
-            isConsoleMoves = false;
-        }
+        // if (isConsoleMoves) {
+        //     console.log(obj.ptCnt, obj, lastPt);
+        //     isConsoleMoves = false;
+        // }
         sX = lastPt.x2 + velocity.x;
         sY = lastPt.y2 + velocity.y;
         pt = {
             id: 2,
             x: sX,
-            y: sY
+            y: sY,
+            z: velocity.z
         };
     }
 }
@@ -62,7 +67,7 @@ function end(e) {
 }
 
 function setPoint(pt) {
-    z = 50;
+    z = velocity.z;
     obj.strokeStyle = extractLightSensor(lp);
     if (pt != undefined) {
         obj.ptCnt++;

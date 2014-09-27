@@ -1,6 +1,6 @@
 $(function() {
     /* switches */
-    sensors = ['lp','g'] /*['ag', 'lp', 'g']*/
+    sensors = [] /*['ag', 'lp', 'g']*/
     isSensors = contains(sensors, 'ag') && contains(sensors, 'lp') && contains(sensors, 'g');
     isAg = contains(sensors, 'ag');
     isLp = contains(sensors, 'lp');
@@ -18,9 +18,10 @@ $(function() {
     obj = null;
     velocity = {
         x: 0,
-        y: 0
+        y: 0,
+        z: 0
     };
-    warp = 5;
+    warp = 0.0001;
 });
 /* additional functions */
 function contains(a, obj) {

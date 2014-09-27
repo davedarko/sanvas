@@ -12,10 +12,10 @@ $(function() {
         $("#canvas").css('border-color', 'blue');
     }
     $("#canvas").attr('width', $(window).innerWidth() - 2);
-    $("#canvas").attr('height', $(window).innerHeight() - 2);
+    $("#canvas").attr('height', $(window).innerHeight() - 100);
 });
 $(window).resize(function() {
     $("#canvas").attr('width', $(window).innerWidth() - 2);
-    $("#canvas").attr('height', $(window).innerHeight() - 2);
+    $("#canvas").attr('height', $(window).innerHeight() - 100);
     draw();
 });

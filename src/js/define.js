@@ -1,6 +1,6 @@
 $(function() {
     /* switches */
-    sensors = [] /*['ag', 'lp', 'g']*/
+    sensors = ['ag','lp','g'] /*['ag', 'lp', 'g']*/
     isSensors = contains(sensors, 'ag') && contains(sensors, 'lp') && contains(sensors, 'g');
     isAg = contains(sensors, 'ag');
     isLp = contains(sensors, 'lp');

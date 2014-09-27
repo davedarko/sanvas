@@ -1,23 +1,4 @@
-$(document).on('keydown', function(e) {
-    switch (e.which) {
-        case 32:
-            isPushedButton = true;
-            break;
-            // key code for left arrow
-        case 37:
-            break;
-            // key code for right arrow
-        case 39:
-            break;
-    }
-});
-$(document).on('keyup', function(e) {
-    switch (e.which) {
-        case 32:
-            isPushedButton = false;
-            break;
-    }
-});
+
 $(function() {
     var tid = setInterval(run, speed);
     $("#canvas").mousedown(function(e) {
@@ -88,6 +69,7 @@ $(function() {
                 }
             }
             setPoint(pt);
+
             draw();
         }
     });
@@ -98,14 +80,11 @@ $(function() {
         }
         draw();
     });
-    // var tid = setInterval(mycode, 20);
-    // function abortTimer() { // to be called when you want to stop the timer
-    //   clearInterval(tid);
-    // }
 });
 
 function setPoint(pt) {
     z = 50;
+    obj.strokeStyle = extractLightSensor (lp);
     if (pt != undefined) {
         obj.ptCnt++;
         var line = Object();
@@ -121,6 +100,7 @@ function setPoint(pt) {
             line.cx1 = line.x2 - (line.x2 - lastPt['x' + pt.id]) / 2;;
             line.cy1 = line.y2 + z;
         }
+        //line.strokeStyle = extractLightSensor(lp);
         obj['p' + obj.ptCnt] = line;
     } else {
         obj.ptCnt++;
@@ -159,7 +139,7 @@ function setPoint(pt) {
 function run() {
     isConsoleMoves = true;
     if (isSensor) {
-        isReady = ag != null;
+        isReady = ag != null && lp != null && g != null;
         if (isReady) {
             $("#canvas").css('background-color', 'white');
             if (isPushedButton) {
@@ -190,3 +170,25 @@ function draw() {
     }
     $('#canvas').drawPath(obj);
 }
+
+/* button */
+$(document).on('keydown', function(e) {
+    switch (e.which) {
+        case 32:
+            isPushedButton = true;
+            break;
+            // key code for left arrow
+        case 37:
+            break;
+            // key code for right arrow
+        case 39:
+            break;
+    }
+});
+$(document).on('keyup', function(e) {
+    switch (e.which) {
+        case 32:
+            isPushedButton = false;
+            break;
+    }
+});

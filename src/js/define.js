@@ -1,6 +1,6 @@
 $(function() {
     /* switches */
-    isSensor = true;
+    isSensor = false;
     isDebug = false;
     /* constants */
     isDrawing = false;
@@ -8,6 +8,8 @@ $(function() {
     isPushedButton = false;
     speed = 750;
     ag = null;
+    lp = null;
+    g = null;
 
     obj = null;
 });

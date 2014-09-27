@@ -1,6 +1,6 @@
 $(function() {
     if (!isSensor) {
-        return;
+        //return;
     }
 
     // "gJg3n9mKzQF2vkev__WQ97y8XDM5qAQu"
@@ -21,14 +21,15 @@ $(function() {
     }).getDeviceData({
         token: token,
         deviceId: 'b9162c8d-995b-4797-9478-2fa785819980', //"5963c2de-7c36-4f14-ab4f-b32b70f835ff",
-        incomingData: function(lp) {
-            
+        incomingData: function(data) {
+            lp = data;
             //console.log("data from Light/Prox", lp)
         }
     }).getDeviceData({
         token: token,
         deviceId: '66957819-9376-4279-9ce8-33a8c0dd034d', //"93917528-dc8f-4c65-96da-cbc8335e6d6b",
-        incomingData: function(g) {
+        incomingData: function(data) {
+            g = data;
             //console.log("data from Grove", g)
         }
     });

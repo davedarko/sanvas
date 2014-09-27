@@ -59,7 +59,6 @@ function run() {
                 velocity.x += ag.accel.x + warp;
                 velocity.y += ag.accel.y + warp;
                 velocity.z += ag.accel.z + warp;
-
                 $("#canvas").mousemove();
             }
         } else {

@@ -1,22 +1,17 @@
 function statusBar () 
 {
 	$('#canvas').drawRect({
-	  fillStyle: '#ccc',
-	  x: 0, y: 0,
-	  width: 240,
-	  height: 48
-	}).drawRect({
 	  fillStyle: extractLightSensor(lp),
-	  x: 4, y: 4,
-	  width: 40,
-	  height: 40
+	  x: 0, y: 0,
+	  width: 100,
+	  height: 100
 	}).drawText({
 	  fillStyle: '#000',
 	  strokeStyle: '#000',
 	  strokeWidth: 0,
-	  x: 48, y: 16,
-	  fontSize: 12,
+	  x: 80, y: 25,
+	  fontSize: 16,
 	  fontFamily: 'Verdana, sans-serif',
-	  text: extractLightSensor(lp) + ' isSensors' + isSensors?'true':'false'
+	  text: sensors.join(',')
 	});
 }

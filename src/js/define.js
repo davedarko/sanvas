@@ -12,14 +12,11 @@ $(function() {
     isConsoleMoves = false;
     isPushedButton = false;
     speed = 750;
+    steps = 5;
     ag = null;
     lp = null;
     g = null;
     obj = null;
-
-
-
-
 
 });
 /* additional functions */
@@ -42,10 +39,10 @@ function loader ()
     isReady &= !isLp || lp != null;
     isReady &= !isG || g != null;
 
-
     if (isReady)
     {
     $("#canvas").css('background-color', 'white');
+    statusBar ();
     }
 
 }

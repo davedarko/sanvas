@@ -7,12 +7,11 @@ $(function() {
     } else {
         $("#canvas").css('border-color', 'blue');
     }
-    $("#canvas").attr('width', $(window).width() - 2);
-    $("#canvas").attr('height', $(window).height() - 2);
-
+    $("#canvas").attr('width', $(window).innerWidth() - 2);
+    $("#canvas").attr('height', $(window).innerHeight() - 2);
 });
 $(window).resize(function() {
-    $("#canvas").attr('width', $(window).width() - 2);
-    $("#canvas").attr('height', $(window).height() - 2);
+    $("#canvas").attr('width', $(window).innerWidth() - 2);
+    $("#canvas").attr('height', $(window).innerHeight() - 2);
     draw();
 });

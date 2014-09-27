@@ -1,10 +1,16 @@
 function handleButton() {
-    if (isSensors || (isG && g != null)) {
+    if (isG && g != null) {
         isPushedButton = (g.up_ch_payload[0]) ? true : false;
+        if (isPushedButton)
+        {
+            isDrawing = false;
+        }
     } else {
+
         $(document).on('keydown', function(e) {
             switch (e.which) {
                 case 32:
+
                     isPushedButton = true;
                     break;
                     // key code for left arrow
@@ -18,12 +24,11 @@ function handleButton() {
         $(document).on('keyup', function(e) {
             switch (e.which) {
                 case 32:
+                console.log ('isPushedButton');
                     isPushedButton = false;
+                    isDrawing = false;
                     break;
             }
         });
-    }
-    if (!isPushedButton) {
-        isDrawing = false;
     }
 }

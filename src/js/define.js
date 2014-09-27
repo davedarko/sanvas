@@ -16,6 +16,9 @@ $(function() {
     lp = null;
     g = null;
     obj = null;
+    velocity = {x:0,y:0};
+	warp = 5;
+
 });
 /* additional functions */
 function contains(a, obj) {

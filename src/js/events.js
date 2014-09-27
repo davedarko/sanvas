@@ -1,21 +1,21 @@
 $(function() {
-    
     var tid = setInterval(run, timeFrame);
-    
     $("#canvas").mousedown(function(e) {
-        obj = {
-            ptCnt: 0,
-            strokeStyle: '#000',
-            strokeWidth: 6,
-            rounded: true
-        };
-        isDrawing = true;
-        if (isAg && ag != null) {
-            sensor_start();
-        } else {
-            start(e);
+        if (isPushedButton) {
+            obj = {
+                ptCnt: 0,
+                strokeStyle: '#000',
+                strokeWidth: 6,
+                rounded: true
+            };
+            if (isAg && ag != null) {
+                sensor_start();
+            } else {
+                start(e);
+            }
+            isDrawing = true;
+            setPoint(pt);
         }
-        setPoint(pt);
     });
     $("#canvas").mousemove(function(e) {
         if (isPushedButton && isDrawing) {
@@ -29,24 +29,24 @@ $(function() {
         }
     });
     $("#canvas").mouseup(function(e) {
-        isDrawing = false;
-        if (isAg && ag != null) {
-            sensor_end();
-        } else {
-            end(e);
+        if (isPushedButton) {
+            isDrawing = false;
+            if (isAg && ag != null) {
+                sensor_end();
+            } else {
+                end(e);
+            }
+            draw();
         }
-        draw();
     });
 });
 
 function run() {
     loader();
     handleButton();
-
     isConsoleMoves = true;
     if (isAg && ag != null) {
-        console.log(isPushedButton,isDrawing);
-
+        console.log(isPushedButton, isDrawing);
         if (isPushedButton) {
             if (!isDrawing) {
                 $("#canvas").mousedown();
@@ -55,7 +55,6 @@ function run() {
             //console.log('GYRO', 'x', ag.gyro.x, 'y', ag.gyro.y, 'z', ag.gyro.z);
             velocity.x += ag.accel.x * warp;
             velocity.y += ag.accel.y * warp;
-
             isX = 1; //Math.abs(ag.accel.x) > 0.3;
             isY = 1; //Math.abs(ag.accel.y) > 0.3;
             isMove = isX || isY;

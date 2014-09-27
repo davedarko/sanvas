@@ -1,4 +1,25 @@
+$(document).on('keydown', function(e) {
+    switch (e.which) {
+        case 32:
+            isPushedButton = true;
+            break;
+            // key code for left arrow
+        case 37:
+            break;
+            // key code for right arrow
+        case 39:
+            break;
+    }
+});
+$(document).on('keyup', function(e) {
+    switch (e.which) {
+        case 32:
+            isPushedButton = false;
+            break;
+    }
+});
 $(function() {
+    var tid = setInterval(run, speed);
     $("#canvas").mousedown(function(e) {
         $("#canvas").clearCanvas();
         //$('canvas').removeLayers();
@@ -11,31 +32,70 @@ $(function() {
             rounded: true
         };
         isDrawing = true;
-
-        pt = {
-            id: 1,
-             x: e.clientX,
-             y: e.clientY
-            //x: $("#canvas").attr('width') / 2,
-            //y: $("#canvas").attr('height') / 2
+        if (isSensor) {
+            pt = {
+                id: 1,
+                x: $("#canvas").attr('width') / 2,
+                y: $("#canvas").attr('height') / 2
+            };
+        } else {
+            console.log('start', e.clientX, e.clientY);
+            pt = {
+                id: 1,
+                x: e.clientX,
+                y: e.clientY
+            }
         }
         setPoint(pt);
     });
     $("#canvas").mousemove(function(e) {
         if (isDrawing) {
-            pt = {
-                id: 2,
-                x: e.clientX,
-                y: e.clientY
+            if (isSensor) {
+                if (obj.ptCnt == 0) {
+                    return;
+                } else if (obj.ptCnt == 1) {
+                    lastPt = obj['p' + (obj.ptCnt)];
+                    sX = lastPt.x1 + 5;
+                    sY = lastPt.y1 + 5;
+                    pt = {
+                        id: 2,
+                        x: sX,
+                        y: sY
+                    };
+                } else if (obj.ptCnt > 1) {
+                    lastPt = obj['p' + (obj.ptCnt)];
+                    if (isConsoleMoves) {
+                        console.log(obj.ptCnt, obj, lastPt);
+                        isConsoleMoves = false;
+                    }
+                    sX = lastPt.x2 + 15;
+                    sY = lastPt.y2 + 15;
+                    pt = {
+                        id: 2,
+                        x: sX,
+                        y: sY
+                    };
+                }
+            } else {
+                if (isConsoleMoves) {
+                    console.log('move', e.clientX, e.clientY);
+                    isConsoleMoves = false;
+                }
+                pt = {
+                    id: 2,
+                    x: e.clientX,
+                    y: e.clientY
+                }
             }
             setPoint(pt);
-            console.log('move', e.clientX, e.clientY);
             draw();
         }
     });
     $("#canvas").mouseup(function(e) {
         isDrawing = false;
-        console.log('end', e.clientX, e.clientY);
+        if (isSensor) {} else {
+            console.log('end', e.clientX, e.clientY);
+        }
         draw();
     });
     // var tid = setInterval(mycode, 20);
@@ -45,7 +105,7 @@ $(function() {
 });
 
 function setPoint(pt) {
-    z = 150;
+    z = 50;
     if (pt != undefined) {
         obj.ptCnt++;
         var line = Object();
@@ -57,7 +117,6 @@ function setPoint(pt) {
         line['x' + pt.id] = pt.x;
         line['y' + pt.id] = pt.y;
         if (isDebug && pt.id == 2) {
-            console.log(obj.ptCnt);
             lastPt = obj['p' + (obj.ptCnt - 1)];
             line.cx1 = line.x2 - (line.x2 - lastPt['x' + pt.id]) / 2;;
             line.cy1 = line.y2 + z;
@@ -97,29 +156,37 @@ function setPoint(pt) {
     }
 }
 
+function run() {
+    isConsoleMoves = true;
+    if (isSensor) {
+        isReady = ag != null;
+        if (isReady) {
+            $("#canvas").css('background-color', 'white');
+            if (isPushedButton) {
+                if (!isDrawing) {
+                    $("#canvas").mousedown();
+                }
+                //console.log('ACCEL', 'x', ag.accel.x, 'y', ag.accel.y, 'z', ag.accel.z);
+                //console.log('GYRO', 'x', ag.gyro.x, 'y', ag.gyro.y, 'z', ag.gyro.z);
+                isX = Math.abs(ag.accel.x) > 0.3;
+                isY = Math.abs(ag.accel.y) > 0.3;
+                isMove = isX || isY;
+                console.log('isMove', isMove);
+                if (isMove) {
+                    $("#canvas").mousemove();
+                }
+            }
+        }
+    }
+}
+
+function abort() { // to be called when you want to stop the timer
+    //   clearInterval(tid);
+}
+
 function draw() {
-    // Add the points from the array to the object
-    // for (var p=0; p<pt1.length; p+=1) {
-    //   obj['x'+(p+1)] = pts[p][0];
-    //   obj['y'+(p+1)] = pts[p][1];
-    // }
-    // Draw the line
-    //console.log (obj);
+    if (obj == null) {
+        return;
+    }
     $('#canvas').drawPath(obj);
-    // $('#canvas').drawPath({
-    //   strokeStyle: '#000',
-    //   strokeWidth: 4,
-    //   p1: {
-    //     type: 'line',
-    //     x1: 200, y1: 50,
-    //     x2: 100, y2: 150,
-    //     x3: 200, y3: 150,
-    //     x4: 120, y4: 200
-    //   },
-    //   p2: {
-    //     type: 'quadratic',
-    //     cx1: 175, cy1: 250,
-    //     x2: 225, y2: 200
-    //   }
-    // });
 }

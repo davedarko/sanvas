@@ -24,7 +24,6 @@ function handleButton() {
         $(document).on('keyup', function(e) {
             switch (e.which) {
                 case 32:
-                console.log ('isPushedButton');
                     isPushedButton = false;
                     isDrawing = false;
                     break;

@@ -27,7 +27,7 @@ $(function() {
     });
     $("#canvas").mousemove(function(e) {
         if (isDrawing) {
-            if (isSensors) {
+            if (isSensors || (isAg && ag != null)) {
                 if (obj.ptCnt == 0) {
                     return;
                 } else if (obj.ptCnt == 1) {
@@ -45,8 +45,8 @@ $(function() {
                         console.log(obj.ptCnt, obj, lastPt);
                         isConsoleMoves = false;
                     }
-                    sX = lastPt.x2 + 15;
-                    sY = lastPt.y2 + 15;
+                    sX = lastPt.x2 + 5;
+                    sY = lastPt.y2 + 5;
                     pt = {
                         id: 2,
                         x: sX,
@@ -131,12 +131,10 @@ function setPoint(pt) {
 }
 
 function run() {
+    loader ();
     isConsoleMoves = true;
-    if (isSensors) {
-        isReady = ag != null && lp != null && g != null;
-        if (isReady) {
+        if (isSensors || (isAg && ag != null)) {
             handleButton();
-            $("#canvas").css('background-color', 'white');
             if (isPushedButton) {
                 if (!isDrawing) {
                     $("#canvas").mousedown();
@@ -155,7 +153,6 @@ function run() {
                 //$('canvas').removeLayers();
                 // $('canvas').drawLayers();        
             }
-        }
     } else {
         handleButton();
         if (!isPushedButton) {

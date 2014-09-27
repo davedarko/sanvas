@@ -1,10 +1,8 @@
 function handleButton() {
-    if (isSensors || (isG &&  g != null)) 
-    {
+    if (isSensors || (isG && g != null)) {
         isPushedButton = (g.up_ch_payload[0]) ? true : false;
-        console.log (isPushedButton);
     } else {
-                $(document).on('keydown', function(e) {
+        $(document).on('keydown', function(e) {
             switch (e.which) {
                 case 32:
                     isPushedButton = true;
@@ -24,5 +22,8 @@ function handleButton() {
                     break;
             }
         });
+    }
+    if (!isPushedButton) {
+        isDrawing = false;
     }
 }

@@ -28,17 +28,21 @@ void setup() {
 
 /* Main Loop */
 void loop() {
-	 
-  static uint8_t dataOut[2] = {1, 2};
+	static uint8_t dataOn[2] = {1,2};
+	static uint8_t dataOff[2] = {0,2};
   static bridge_payload_t rxPayload;
+  int ms = 500;
   
   if (digitalRead(button) == LOW) {
         
-      bridge.sendData(dataOut, 2);
-
-	digitalWrite(led, HIGH);
-	delay(1000);
-	digitalWrite(led, LOW);
+    bridge.sendData(dataOn, 2);
+    digitalWrite(led, HIGH);
+    delay(ms);
+    digitalWrite(led, LOW);
+  }
+  else {
+    bridge.sendData(dataOff, 2);
+    delay(ms);
   }
 }
 

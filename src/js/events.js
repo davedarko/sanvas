@@ -63,12 +63,22 @@ function run() {
             }
         } else {
             $("#canvas").clearCanvas();
+            velocity = {
+                x: 0,
+                y: 0,
+                z: 0
+            };
             //$('canvas').removeLayers();
             // $('canvas').drawLayers();        
         }
     } else {
         if (!isPushedButton) {
             $("#canvas").clearCanvas();
+            velocity = {
+                x: 0,
+                y: 0,
+                z: 0
+            };
         }
     }
 }
